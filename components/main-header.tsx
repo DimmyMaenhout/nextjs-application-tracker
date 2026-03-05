@@ -1,20 +1,21 @@
 import Link from "next/link";
+import NavLink from "./nav-link";
 
 export default function MainHeader() {
   return (
     <header className="flex justify-between my-6">
-      <Link href="/">Home</Link>
+      <Link href="/">AppName</Link>
 
       <nav>
         <ul className="flex gap-8">
           <li>
-            <Link href="/dashboard">Dashboard</Link>
+            <NavLink href="/dashboard">Dashboard</NavLink>
           </li>
           <li>
-            <Link href="/applications">Applications</Link>
+            <NavLink href="/applications">Applications</NavLink>
           </li>
           <li>
-            <Link href="/export">Export</Link>
+            <NavLink href="/export">Export</NavLink>
           </li>
         </ul>
       </nav>
