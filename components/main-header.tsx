@@ -4,7 +4,9 @@ import NavLink from "./nav-link";
 export default function MainHeader() {
   return (
     <header className="flex justify-between my-6">
-      <Link href="/">AppName</Link>
+      <Link className="text-4xl font-bold" href="/">
+        AppName
+      </Link>
 
       <nav>
         <ul className="flex gap-8">
