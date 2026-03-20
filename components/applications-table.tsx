@@ -4,7 +4,7 @@ type ApplicationsTableProps = {
   applications: Application[];
 };
 
-export default function ApplictionsTable({
+export default function ApplicationsTable({
   applications,
 }: ApplicationsTableProps) {
   return <div></div>;
