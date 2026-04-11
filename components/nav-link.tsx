@@ -14,7 +14,10 @@ export default function NavLink({
 }: PropsWithChildren<NavLinkProps>) {
   const path = usePathname();
   return (
-    <Link className={`${path === href ? "font-bold" : undefined}`} href={href}>
+    <Link
+      className={`${path === href ? "font-bold" : undefined} text-[#2b2b2b] text-transform: uppercase text-sm`}
+      href={href}
+    >
       {children}
     </Link>
   );

@@ -9,6 +9,13 @@ export function formatDate(date: Date): string {
   return `${day}/${month}/${year}`;
 }
 
+export function convertStringToDate(dateString: string): Date {
+  // @TODO: Might have to check for valid format and that the string can be parsed to a date!!!
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  return new Date(year, month - 1, day);
+}
+
 function isValidDate(date: Date): boolean {
   return !isNaN(date.getDate());
 }
