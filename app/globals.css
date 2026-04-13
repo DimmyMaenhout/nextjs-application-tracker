@@ -46,6 +46,11 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-main-button: var(--main-button);
+  --color-main-button-hover: var(--main-button-hover);
+  --color-nav-active: var(--nav-active);
+  --color-nav-inactive: var(--nav-inactive)
 }
 
 :root {
@@ -81,6 +86,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --main-button: #1e8fa3;
+  --main-button-hover: #2fb7c8;
+  --nav-active: #2b2b2b;
+  --nav-inactive: #6b7280;
 }
 
 .dark {

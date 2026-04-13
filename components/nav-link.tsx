@@ -15,7 +15,7 @@ export default function NavLink({
   const path = usePathname();
   return (
     <Link
-      className={`${path === href ? "font-bold" : undefined} text-[#2b2b2b] text-transform: uppercase text-sm`}
+      className={`${path === href ? "text-(--color-nav-active)" : "text-(--color-nav-inactive)"} font-extrabold text-transform: uppercase text-sm`}
       href={href}
     >
       {children}
