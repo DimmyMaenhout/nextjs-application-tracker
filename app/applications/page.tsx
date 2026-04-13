@@ -121,13 +121,17 @@ async function getData(): Promise<Application[]> {
   return mockApplications;
 }
 
+export const ButtonStyling = `px-4 py-2 bg-[var(--color-main-button)] hover:bg-[var(--color-main-button-hover)] text-white font-bold rounded-2xl`;
+
 export default async function ApplicationPage() {
   const data = await getData();
 
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-end mb-2 ">
-        <Link href="/applications/new">Add Application</Link>
+        <Link href="/applications/new" className={ButtonStyling}>
+          Add Application
+        </Link>
       </div>
       <DataTable columns={Columns} data={data} />
     </div>
