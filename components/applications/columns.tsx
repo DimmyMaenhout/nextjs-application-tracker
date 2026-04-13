@@ -2,7 +2,6 @@
 
 import { Application } from "@/models/Application";
 import { ApplicationStatus, StatusColors } from "@/models/ApplicationStatus";
-import { formatDate } from "@/util/date";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const Columns: ColumnDef<Application>[] = [
@@ -13,7 +12,11 @@ export const Columns: ColumnDef<Application>[] = [
       const status: ApplicationStatus = row.getValue("status");
       const color = StatusColors[status];
 
-      return <div className={`${color} rounded-[8px]  font-bold text-center`}>{status}</div>;
+      return (
+        <div className={`${color} rounded-[8px]  font-bold text-center`}>
+          {status}
+        </div>
+      );
     },
   },
   {
@@ -33,7 +36,7 @@ export const Columns: ColumnDef<Application>[] = [
     header: "Applied at",
     cell: ({ row }) => {
       const appliedAtDate = new Date(row.getValue("appliedAt"));
-      const formatted = formatDate(appliedAtDate);
+      const formatted = appliedAtDate.toLocaleDateString();
 
       return <div>{formatted}</div>;
     },
