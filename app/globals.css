@@ -51,6 +51,7 @@
   --color-main-button-hover: var(--main-button-hover);
   --color-nav-active: var(--nav-active);
   --color-nav-inactive: var(--nav-inactive)
+  --dark-teal: var(--dark-teal)
 }
 
 :root {
@@ -91,6 +92,8 @@
   --main-button-hover: #2fb7c8;
   --nav-active: #2b2b2b;
   --nav-inactive: #6b7280;
+
+  --dark-teal: #0d434d;
 }
 
 .dark {
