@@ -6,7 +6,7 @@ interface NoteCardProps {
 
 export default function NoteCard({ note }: NoteCardProps) {
   return (
-    <div className="max-w-md w-full bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
+    <div className="max-w-lg w-full bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
       <div className="flex flex-col gap-2">
         <p className="text-gray-800 text-base leading-relaxed">
           {note.content}

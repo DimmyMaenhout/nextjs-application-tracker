@@ -1,11 +1,13 @@
+import ApplicationDetailRow from "@/components/ApplicationDetailRow";
 import NoteCard from "@/components/noteCard";
+import { ButtonStyling } from "../page";
 
 export default async function ApplicationDetailsPage({
   params,
 }: {
   params: Promise<{ applicationSlug: string }>;
 }) {
-  const h2Styling = "font-bold text-2xl text-[#1e8fa3]";
+  const h2Styling = "font-bold text-2xl text-[#1e8fa3] mb-8";
   const { applicationSlug } = await params;
 
   // @TODO: fetch detail with async call
@@ -43,67 +45,71 @@ export default async function ApplicationDetailsPage({
       },
     ],
   };
-  // return <div>ApplicationsDetailPage {applicationSlug}</div>;
 
   return (
     <div className="p-8 flex flex-col">
-      <h2 className={h2Styling}>Details</h2>
+      <div className="w-full bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
+        <h2 className={h2Styling}>Details</h2>
 
-      <div className="flex justify-around">
-        <div>
-          <div className="flex">
-            <p className="font-bold w-40">Company Name</p>
-            <p>{applicationDetail.companyName}</p>
+        <div className="flex justify-around ">
+          <div>
+            <ApplicationDetailRow
+              title="Company Name"
+              value={applicationDetail.companyName}
+            />
+
+            <ApplicationDetailRow
+              title="Job Title"
+              value={applicationDetail.jobTitle}
+            />
+
+            <ApplicationDetailRow
+              title="Location"
+              value={applicationDetail.location}
+            />
+
+            <ApplicationDetailRow
+              title="Source"
+              value={applicationDetail.source}
+            />
           </div>
 
-          <div className="flex ">
-            <p className="font-bold w-40">Job Title</p>
-            <p>{applicationDetail.jobTitle}</p>
-          </div>
+          {/* 2de kolom /  */}
 
-          <div className="flex">
-            <p className="font-bold w-40">Location</p>
-            <p>{applicationDetail.location}</p>
-          </div>
+          <div>
+            <ApplicationDetailRow
+              title="Applied"
+              value={new Date(applicationDetail.appliedAt).toLocaleDateString()}
+            />
 
-          <div className="flex">
-            <p className="font-bold w-40">Source</p>
-            <p>{applicationDetail.source}</p>
-          </div>
-        </div>
+            <ApplicationDetailRow
+              title="Status"
+              value={applicationDetail.status}
+            />
 
-        {/* 2de kolom /  */}
+            <ApplicationDetailRow
+              title="Contact Name"
+              value={applicationDetail.contactName}
+            />
 
-        <div>
-          <div className="flex">
-            <p className="font-bold w-40">Applied</p>
-            <p>{new Date(applicationDetail.appliedAt).toLocaleDateString()}</p>
-          </div>
-
-          <div className="flex">
-            <p className="font-bold w-40">Status</p>
-            <p>{applicationDetail.status}</p>
-          </div>
-
-          <div className="flex">
-            <p className="font-bold w-40">Contact Name</p>
-            <p>{applicationDetail.contactName}</p>
-          </div>
-
-          <div className="flex">
-            <p className="font-bold w-40">Contact email</p>
-            <p>{applicationDetail.contactEmail}</p>
+            <ApplicationDetailRow
+              title="Contact Email"
+              value={applicationDetail.contactEmail}
+            />
           </div>
         </div>
       </div>
 
       {/* Notes */}
       <div className="flex flex-col gap-4 mt-8">
-        <h2 className={h2Styling}>Notes</h2>
-        <div className="flex flex-col gap-4">
-          {applicationDetail.notes.map((note) => (
-            <NoteCard key={note.id} note={note} />
-          ))}
+        <div className="w-full bg-white rounded-2xl p-4">
+          <h2 className={h2Styling}>Notes</h2>
+
+          <div className="flex flex-col gap-4 items-center">
+            {applicationDetail.notes.map((note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
