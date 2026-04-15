@@ -4,22 +4,25 @@ type FormFieldProps = {
   label: string;
   name: string;
   className?: string;
+  error?: string;
   children: ReactElement<any>;
 };
 
 export function FormField({
   label,
   name,
+  error,
   className,
   children,
 }: FormFieldProps) {
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
+    <div className={`flex-1 flex-col gap-1 ${className}`}>
       <label htmlFor={name}>{label}</label>
       {cloneElement(children, {
         id: name,
         name,
       })}
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 }
