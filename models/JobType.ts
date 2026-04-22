@@ -1,6 +1,6 @@
 export type JobType =
-  | "full-time"
-  | "part-time"
+  | "full_time"
+  | "part_time"
   | "contract"
   | "internship"
   | "freelance";

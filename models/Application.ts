@@ -4,7 +4,7 @@ import { Note } from "./Note";
 import { RemoteType } from "./RemoteType";
 
 export interface Application {
-  id: number;
+  id: string;
   companyName: string;
   jobTitle: string;
   jobType?: JobType;
@@ -14,16 +14,13 @@ export interface Application {
   status: ApplicationStatus;
   jobUrl?: string;
 
-  appliedAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  appliedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 
   contactName?: string;
   contactEmail?: string;
-  contactLinkedin?: string;
-
-  salaryRange?: string;
+  contactLinkedIn?: string;
   source?: string;
-
   notes: Note[];
 }
