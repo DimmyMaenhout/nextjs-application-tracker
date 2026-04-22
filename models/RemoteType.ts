@@ -1,1 +1,1 @@
-export type RemoteType = "on-site" | "hybrid" | "remote";
+export type RemoteType = "on_site" | "hybrid" | "remote";
