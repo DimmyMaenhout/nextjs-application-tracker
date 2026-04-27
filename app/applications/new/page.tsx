@@ -1,9 +1,15 @@
 "use client";
 
 import { addApplication, AddApplicationActionState } from "@/actions/actions";
+import Button from "@/components/Button";
 import { FormField } from "@/components/form/formField";
+
+import {
+  ApplicationStatusArrayValues,
+  applicationStatuses,
+} from "@/models/ApplicationStatus";
+import { JobTypeArrayValues, JobTypes } from "@/models/JobType";
 import { useActionState } from "react";
-import { ButtonStyling } from "../page";
 
 export default function NewApplicationPage() {
   const [state, action, isPending] = useActionState<
@@ -32,7 +38,19 @@ export default function NewApplicationPage() {
     success: false,
   });
 
-  const inputStyle = "border-2 border-stone-400 rounded w-full";
+  const inputStyle = "border-2 border-stone-400 rounded w-full px-1";
+
+  const applicationStatusItems = applicationStatuses.map(
+    (status: ApplicationStatusArrayValues) => ({
+      value: status,
+      label: status.replaceAll("_", " "),
+    }),
+  );
+
+  const jobTypeItems = JobTypes.map((jobType: JobTypeArrayValues) => ({
+    value: jobType,
+    label: jobType.replaceAll("_", " "),
+  }));
 
   return (
     <div className="border rounded p-8 border-stone-500">
@@ -48,10 +66,29 @@ export default function NewApplicationPage() {
       <form action={action}>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
-            {/* @TODO: Change to dropdown (select) where user can select certain values!!! */}
-            <FormField name="status" label="Status" className="flex-1">
-              <input className={inputStyle} type="text" />
-            </FormField>
+            <div className="flex flex-row gap-4">
+              <FormField
+                name="applicationStatus"
+                label="Status"
+                className="flex-1"
+              >
+                <select name="applicationStatus" className={inputStyle}>
+                  {applicationStatusItems.map((status) => (
+                    <option key={status.value} value={status.value}>
+                      {status.label}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+
+              <FormField
+                name="appliedAt"
+                label="Applied At"
+                error={state.errors.appliedAt}
+              >
+                <input className={inputStyle} type="date" />
+              </FormField>
+            </div>
 
             <div className="flex flex-row gap-4">
               <FormField
@@ -66,6 +103,28 @@ export default function NewApplicationPage() {
                 name="companyName"
                 label="Company Name"
                 error={state.errors.companyName}
+              >
+                <input className={inputStyle} type="text" />
+              </FormField>
+            </div>
+
+            <div className="flex flex-row gap-4">
+              <FormField
+                name="jobType"
+                label="Job Type"
+                error={state.errors.jobType}
+              >
+                <select name="jobType" className={inputStyle}>
+                  {jobTypeItems.map((jobType) => (
+                    <option value={jobType.value}>{jobType.label}</option>
+                  ))}
+                </select>
+              </FormField>
+
+              <FormField
+                name="remoteType"
+                label="Remote Type"
+                error={state.errors.remoteType}
               >
                 <input className={inputStyle} type="text" />
               </FormField>
@@ -89,14 +148,6 @@ export default function NewApplicationPage() {
               </FormField>
             </div>
 
-            <FormField
-              name="appliedAt"
-              label="Applied At"
-              error={state.errors.appliedAt}
-            >
-              <input className={inputStyle} type="date" />
-            </FormField>
-
             <div className="flex flex-row gap-4">
               <FormField
                 name="location"
@@ -115,6 +166,16 @@ export default function NewApplicationPage() {
               </FormField>
             </div>
 
+            <div className="flex flex-row gap-4">
+              <FormField
+                name="jobUrl"
+                label="Job URL"
+                error={state.errors.jobUrl}
+              >
+                <input className={inputStyle} type="url" />
+              </FormField>
+            </div>
+
             <FormField name="notes" label="Notes" error={state.errors.notes}>
               <textarea
                 className={inputStyle}
@@ -124,13 +185,9 @@ export default function NewApplicationPage() {
               />
             </FormField>
           </div>
-          <button
-            className={`self-end ${ButtonStyling}`}
-            type="submit"
-            disabled={isPending}
-          >
+          <Button className={`self-end`} type="submit" disabled={isPending}>
             Submit
-          </button>
+          </Button>
         </div>
       </form>
     </div>
