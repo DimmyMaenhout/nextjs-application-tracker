@@ -2,13 +2,18 @@
 
 import { addApplication, AddApplicationActionState } from "@/actions/actions";
 import Button from "@/components/Button";
-import { FormField } from "@/components/form/formField";
+import FormRow from "@/components/form/FormRow";
+import SelectField from "@/components/form/SelectField";
+import TextAreaField from "@/components/form/TextAreaField";
+import TextField from "@/components/form/TextField";
+import { RemoteType } from "@/lib/generated/prisma/enums";
 
 import {
   ApplicationStatusArrayValues,
   applicationStatuses,
 } from "@/models/ApplicationStatus";
 import { JobTypeArrayValues, JobTypes } from "@/models/JobType";
+import { RemoteTypeArrayValues, RemoteTypes } from "@/models/RemoteType";
 import { useActionState } from "react";
 
 export default function NewApplicationPage() {
@@ -21,7 +26,7 @@ export default function NewApplicationPage() {
       jobTitle: "",
       jobType: undefined,
       location: undefined,
-      remoteType: undefined,
+      remoteType: RemoteType.on_site,
 
       status: "to_apply",
       jobUrl: undefined,
@@ -38,9 +43,6 @@ export default function NewApplicationPage() {
     success: false,
   });
 
-  const inputStyle =
-    "border-2 border-stone-400 rounded w-full px-1 min-h-[30px]";
-
   const applicationStatusItems = applicationStatuses.map(
     (status: ApplicationStatusArrayValues) => ({
       value: status,
@@ -52,6 +54,13 @@ export default function NewApplicationPage() {
     value: jobType,
     label: jobType.replaceAll("_", " "),
   }));
+
+  const remoteTypeItems = RemoteTypes.map(
+    (remoteType: RemoteTypeArrayValues) => ({
+      value: remoteType,
+      label: remoteType.replaceAll("_", " "),
+    }),
+  );
 
   return (
     <div className="border rounded p-8 border-stone-500">
@@ -67,122 +76,94 @@ export default function NewApplicationPage() {
       <form action={action}>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
-            <div className="flex flex-row gap-4">
-              <FormField
-                name="applicationStatus"
-                label="Status"
-                className="flex-1"
-              >
-                <select name="applicationStatus" className={inputStyle}>
-                  {applicationStatusItems.map((status) => (
-                    <option key={status.value} value={status.value}>
-                      {status.label}
-                    </option>
-                  ))}
-                </select>
-              </FormField>
+            <FormRow>
+              <SelectField
+                name="status"
+                label="Application Status"
+                error={state.errors.status}
+                items={applicationStatusItems}
+              />
 
-              <FormField
+              <TextField
                 name="appliedAt"
                 label="Applied At"
                 error={state.errors.appliedAt}
-              >
-                <input className={inputStyle} type="date" />
-              </FormField>
-            </div>
+                type="date"
+              />
+            </FormRow>
 
-            <div className="flex flex-row gap-4">
-              <FormField
+            <FormRow>
+              <TextField
                 name="jobTitle"
                 label="Job Title"
                 error={state.errors.jobTitle}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
+                type="text"
+              />
 
-              <FormField
+              <TextField
                 name="companyName"
                 label="Company Name"
                 error={state.errors.companyName}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
-            </div>
+                type="text"
+              />
+            </FormRow>
 
-             <FormField
-                name="jobUrl"
-                label="Job URL"
-                error={state.errors.jobUrl}
-              >
-                <input className={inputStyle} type="url" />
-              </FormField>
+            <TextField
+              name="jobUrl"
+              label="Job URL"
+              error={state.errors.jobUrl}
+              type="url"
+            />
 
-            <div className="flex flex-row gap-4">
-              <FormField
+            <FormRow>
+              <SelectField
                 name="jobType"
                 label="Job Type"
                 error={state.errors.jobType}
-              >
-                <select name="jobType" className={inputStyle}>
-                  {jobTypeItems.map((jobType) => (
-                    <option value={jobType.value}>{jobType.label}</option>
-                  ))}
-                </select>
-              </FormField>
+                items={jobTypeItems}
+              />
 
-              <FormField
+              <SelectField
                 name="remoteType"
                 label="Remote Type"
                 error={state.errors.remoteType}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
-            </div>
+                items={remoteTypeItems}
+              />
+            </FormRow>
 
-            <div className="flex flex-row gap-4">
-              <FormField
+            <FormRow>
+              <TextField
                 name="contactName"
                 label="Contact Name"
                 error={state.errors.contactName}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
+                type="text"
+              />
 
-              <FormField
+              <TextField
                 name="contactEmail"
                 label="Contact Email"
                 error={state.errors.contactEmail}
-              >
-                <input className={inputStyle} type="email" />
-              </FormField>
-            </div>
+                type="email"
+              />
+            </FormRow>
 
-            <div className="flex flex-row gap-4">
-              <FormField
+            <FormRow>
+              <TextField
                 name="location"
                 label="Location"
                 error={state.errors.location}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
+                type="text"
+              />
 
-              <FormField
+              <TextField
                 name="source"
                 label="Source"
                 error={state.errors.source}
-              >
-                <input className={inputStyle} type="text" />
-              </FormField>
-            </div>
-
-            <FormField name="notes" label="Notes" error={state.errors.notes}>
-              <textarea
-                className={inputStyle}
-                name="notes"
-                rows={5}
-                id="notes"
+                type="text"
               />
-            </FormField>
+            </FormRow>
+
+            <TextAreaField name="notes" rows={5} />
           </div>
           <Button className={`self-end`} type="submit" disabled={isPending}>
             Submit
