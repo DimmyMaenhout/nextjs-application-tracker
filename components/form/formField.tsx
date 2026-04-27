@@ -1,11 +1,9 @@
-import { cloneElement, ReactElement } from "react";
-
 type FormFieldProps = {
   label: string;
   name: string;
   className?: string;
   error?: string;
-  children: ReactElement<any>;
+  children: (props: { id: string; name: string }) => React.ReactNode;
 };
 
 export function FormField({
@@ -16,9 +14,9 @@ export function FormField({
   children,
 }: FormFieldProps) {
   return (
-    <div className={`flex-1 flex-col gap-1 ${className}`}>
+    <div className="flex flex-1 flex-col gap-1">
       <label htmlFor={name}>{label}</label>
-      {cloneElement(children, {
+      {children({
         id: name,
         name,
       })}
