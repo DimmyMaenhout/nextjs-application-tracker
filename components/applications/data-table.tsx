@@ -17,12 +17,12 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
-interface DataTableProps<TData extends { id: number }, TValue> {
+interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData extends { id: number }, TValue>({
+export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -34,7 +34,7 @@ export function DataTable<TData extends { id: number }, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  function navigateToApplicationDetail(id: number) {
+  function navigateToApplicationDetail(id: string) {
     router.push(`/applications/${id}`);
   }
 
