@@ -38,7 +38,8 @@ export default function NewApplicationPage() {
     success: false,
   });
 
-  const inputStyle = "border-2 border-stone-400 rounded w-full px-1";
+  const inputStyle =
+    "border-2 border-stone-400 rounded w-full px-1 min-h-[30px]";
 
   const applicationStatusItems = applicationStatuses.map(
     (status: ApplicationStatusArrayValues) => ({
@@ -108,6 +109,14 @@ export default function NewApplicationPage() {
               </FormField>
             </div>
 
+             <FormField
+                name="jobUrl"
+                label="Job URL"
+                error={state.errors.jobUrl}
+              >
+                <input className={inputStyle} type="url" />
+              </FormField>
+
             <div className="flex flex-row gap-4">
               <FormField
                 name="jobType"
@@ -163,16 +172,6 @@ export default function NewApplicationPage() {
                 error={state.errors.source}
               >
                 <input className={inputStyle} type="text" />
-              </FormField>
-            </div>
-
-            <div className="flex flex-row gap-4">
-              <FormField
-                name="jobUrl"
-                label="Job URL"
-                error={state.errors.jobUrl}
-              >
-                <input className={inputStyle} type="url" />
               </FormField>
             </div>
 
