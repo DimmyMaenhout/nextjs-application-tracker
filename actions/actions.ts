@@ -6,6 +6,7 @@ import { ApplicationStatus } from "@/models/ApplicationStatus";
 import { JobType } from "@/models/JobType";
 import { RemoteType } from "@/models/RemoteType";
 import { isEmptyString } from "@/util/string";
+import { redirect } from "next/navigation";
 
 export type AddApplicationActionState = {
   fields: {
@@ -19,8 +20,6 @@ export type AddApplicationActionState = {
     jobUrl?: string;
 
     appliedAt?: string;
-    //   createdAt: Date;
-    //   updatedAt: Date;
 
     contactName?: string;
     contactEmail?: string;
@@ -44,9 +43,7 @@ export async function addApplication(
   const jobType = formData.get("jobType") as JobType;
   const location = formData.get("location") as string;
   const remoteType = formData.get("remoteType") as RemoteType;
-  const applicationStatus = formData.get(
-    "applicationStatus",
-  ) as ApplicationStatus;
+  const status = formData.get("status") as ApplicationStatus;
 
   const jobUrl = formData.get("jobUrl") as string;
 
@@ -75,21 +72,7 @@ export async function addApplication(
   if (appliedAtDate)
     if (Object.keys(errors).length > 0) {
       return {
-        fields: {
-          companyName,
-          jobTitle,
-          jobType: jobType,
-          location: location,
-          remoteType: remoteType,
-          status: applicationStatus,
-          jobUrl: jobUrl,
-          appliedAt: appliedAtRaw,
-          contactName: contactName,
-          contactEmail: contactEmail,
-          contactLinkedin: contactLinkedin,
-          source: source,
-          notes: notes,
-        },
+        ..._prevState,
         errors,
         success: false,
       };
@@ -102,7 +85,7 @@ export async function addApplication(
       jobType,
       location,
       remoteType,
-      status: applicationStatus,
+      status,
       jobUrl,
       appliedAt: appliedAtRaw ? new Date(appliedAtRaw) : undefined,
       contactName,
@@ -122,25 +105,5 @@ export async function addApplication(
     },
   });
 
-  return {
-    fields: {
-      companyName,
-      jobTitle,
-      jobType,
-      location,
-      remoteType,
-      status: applicationStatus,
-      jobUrl,
-      appliedAt: appliedAtDate,
-      // createdAt,
-      // updatedAt,
-      contactName,
-      contactEmail,
-      contactLinkedin,
-      source,
-      notes,
-    },
-    errors: {},
-    success: true,
-  };
+  redirect("/applications");
 }
