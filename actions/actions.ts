@@ -1,9 +1,12 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
+import { USER_ID } from "@/lib/user";
 import { ApplicationStatus } from "@/models/ApplicationStatus";
 import { JobType } from "@/models/JobType";
 import { RemoteType } from "@/models/RemoteType";
 import { isEmptyString } from "@/util/string";
+import { redirect } from "next/navigation";
 
 export type AddApplicationActionState = {
   fields: {
@@ -17,8 +20,6 @@ export type AddApplicationActionState = {
     jobUrl?: string;
 
     appliedAt?: string;
-    //   createdAt: Date;
-    //   updatedAt: Date;
 
     contactName?: string;
     contactEmail?: string;
@@ -42,14 +43,11 @@ export async function addApplication(
   const jobType = formData.get("jobType") as JobType;
   const location = formData.get("location") as string;
   const remoteType = formData.get("remoteType") as RemoteType;
-  const applicationStatus = formData.get(
-    "applicationStatus",
-  ) as ApplicationStatus;
+  const status = formData.get("status") as ApplicationStatus;
+
   const jobUrl = formData.get("jobUrl") as string;
 
   const appliedAtRaw = formData.get("appliedAt") as string;
-  // const createdAt = formData.get("createdAt") as Date;
-  // const updatedAt = formData.get("updatedAt") as Date; // NOT SURE IF WE NEED THIS HERE
 
   const contactName = formData.get("contactName") as string;
   const contactEmail = formData.get("contactEmail") as string;
@@ -57,7 +55,7 @@ export async function addApplication(
 
   const source = formData.get("source") as string;
 
-  const notes = formData.get("notes") as string;
+  const notes = formData.get("notes") as string; // @TODO: Change this to note? If we create a new application there will only be one note
 
   const appliedAtDate = new Date(appliedAtRaw).toLocaleDateString();
 
@@ -74,45 +72,38 @@ export async function addApplication(
   if (appliedAtDate)
     if (Object.keys(errors).length > 0) {
       return {
-        fields: {
-          companyName,
-          jobTitle,
-          jobType: undefined,
-          location: undefined,
-          remoteType: undefined,
-          status: "to_apply" as ApplicationStatus,
-          jobUrl: undefined,
-          appliedAt: undefined,
-          contactName: undefined,
-          contactEmail: undefined,
-          contactLinkedin: undefined,
-          source: undefined,
-          notes: undefined,
-        },
+        ..._prevState,
         errors,
         success: false,
       };
     }
 
-  return {
-    fields: {
+  await prisma.application.create({
+    data: {
       companyName,
       jobTitle,
       jobType,
       location,
       remoteType,
-      status: applicationStatus,
+      status,
       jobUrl,
-      appliedAt: appliedAtDate,
-      // createdAt,
-      // updatedAt,
+      appliedAt: appliedAtRaw ? new Date(appliedAtRaw) : undefined,
       contactName,
       contactEmail,
-      contactLinkedin,
+      contactLinkedIn: contactLinkedin,
       source,
-      notes,
+      notes: notes
+        ? {
+            create: {
+              content: notes,
+            },
+          }
+        : undefined,
+      user: {
+        connect: { id: USER_ID },
+      },
     },
-    errors: {},
-    success: true,
-  };
+  });
+
+  redirect("/applications");
 }
