@@ -1,6 +1,7 @@
+import { deleteApplication } from "@/actions/Application";
 import ApplicationDetailRow from "@/components/ApplicationDetailRow";
+import Button from "@/components/Button";
 import NoteCard from "@/components/noteCard";
-import { ButtonStyling } from "../page";
 
 export default async function ApplicationDetailsPage({
   params,
@@ -36,21 +37,25 @@ export default async function ApplicationDetailsPage({
       {
         id: "n2",
         content: "First interview scheduled for Feb 25.",
-        createdAt: new Date("2026-02-20"),
+        createdAt: "2026-02-20",
       },
       {
         id: "n3",
         content: "Tech stack: React, Ruby, GraphQL.",
-        createdAt: new Date("2026-02-20"),
+        createdAt: "2026-02-20",
       },
     ],
   };
 
   return (
     <div className="p-8 flex flex-col">
-      <div className="w-full bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
-        <h2 className={h2Styling}>Details</h2>
-
+      <div className="w-full rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
+        <div className="flex justify-between">
+          <h2 className={h2Styling}>Details</h2>
+          <form action={deleteApplication.bind(null, applicationSlug)}>
+            <Button variant="danger">Delete</Button>
+          </form>
+        </div>
         <div className="flex justify-around ">
           <div>
             <ApplicationDetailRow

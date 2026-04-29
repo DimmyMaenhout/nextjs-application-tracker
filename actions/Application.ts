@@ -71,3 +71,17 @@ export async function addApplication(
 
   redirect("/applications");
 }
+
+export async function deleteApplication(id: string) {
+  const application = await prisma.application.findFirst({
+    where: { id: id, userId: USER_ID },
+  });
+
+  if (!application) {
+    throw new Error("Application not found");
+  }
+
+  await prisma.application.delete({ where: { id: id } });
+
+  redirect("/applications");
+}
