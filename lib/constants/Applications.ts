@@ -1,13 +1,4 @@
-export type ApplicationStatus =
-  | "wishlist"
-  | "to_apply"
-  | "applied"
-  | "interview"
-  | "offer"
-  | "rejected"
-  | "accepted"
-  | "withdrawn"
-  | "ghosted";
+import { ApplicationStatus } from "../generated/prisma/enums";
 
 export const StatusColors: Record<ApplicationStatus, string> = {
   wishlist: "bg-gray-200 text-gray-600",
@@ -20,17 +11,3 @@ export const StatusColors: Record<ApplicationStatus, string> = {
   withdrawn: "bg-slate-200 text-slate-600",
   ghosted: "bg-zinc-200 text-zinc-600",
 };
-
-export const applicationStatuses = [
-  "wishlist",
-  "to_apply",
-  "applied",
-  "interview",
-  "offer",
-  "rejected",
-  "accepted",
-  "withdrawn",
-  "ghosted",
-] as const;
-
-export type ApplicationStatusArrayValues = (typeof applicationStatuses)[number];
