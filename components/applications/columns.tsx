@@ -1,7 +1,7 @@
 "use client";
 
-import { Application } from "@/models/Application";
-import { ApplicationStatus, StatusColors } from "@/models/ApplicationStatus";
+import { StatusColors } from "@/lib/constants/Applications";
+import { Application, ApplicationStatus } from "@/lib/generated/prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const Columns: ColumnDef<Application>[] = [

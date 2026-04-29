@@ -1,19 +1,20 @@
 "use client";
 
-import { addApplication, AddApplicationActionState } from "@/actions/actions";
+import {
+  addApplication,
+  AddApplicationActionState,
+} from "@/actions/Application";
 import Button from "@/components/Button";
 import FormRow from "@/components/form/FormRow";
 import SelectField from "@/components/form/SelectField";
 import TextAreaField from "@/components/form/TextAreaField";
 import TextField from "@/components/form/TextField";
-import { RemoteType } from "@/lib/generated/prisma/enums";
-
 import {
-  ApplicationStatusArrayValues,
-  applicationStatuses,
-} from "@/models/ApplicationStatus";
-import { JobTypeArrayValues, JobTypes } from "@/models/JobType";
-import { RemoteTypeArrayValues, RemoteTypes } from "@/models/RemoteType";
+  ApplicationStatus,
+  JobType,
+  RemoteType,
+} from "@/lib/generated/prisma/enums";
+
 import { useActionState } from "react";
 
 export default function NewApplicationPage() {
@@ -28,7 +29,7 @@ export default function NewApplicationPage() {
       location: undefined,
       remoteType: RemoteType.on_site,
 
-      status: "to_apply",
+      status: ApplicationStatus.to_apply,
       jobUrl: undefined,
       appliedAt: undefined,
 
@@ -43,24 +44,22 @@ export default function NewApplicationPage() {
     success: false,
   });
 
-  const applicationStatusItems = applicationStatuses.map(
-    (status: ApplicationStatusArrayValues) => ({
-      value: status,
-      label: status.replaceAll("_", " "),
+  const applicationStatusItems = Object.values(ApplicationStatus).map(
+    (value) => ({
+      value,
+      label: value.replaceAll("_", " "),
     }),
   );
 
-  const jobTypeItems = JobTypes.map((jobType: JobTypeArrayValues) => ({
-    value: jobType,
-    label: jobType.replaceAll("_", " "),
+  const jobTypeItems = Object.values(JobType).map((value) => ({
+    value,
+    label: value.replaceAll("_", " "),
   }));
 
-  const remoteTypeItems = RemoteTypes.map(
-    (remoteType: RemoteTypeArrayValues) => ({
-      value: remoteType,
-      label: remoteType.replaceAll("_", " "),
-    }),
-  );
+  const remoteTypeItems = Object.values(RemoteType).map((value) => ({
+    value: value,
+    label: value.replaceAll("_", " "),
+  }));
 
   return (
     <div className="border rounded p-8 border-stone-500">
