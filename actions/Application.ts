@@ -20,7 +20,15 @@ export async function addApplication(
   formData: FormData,
 ) {
   const raw = Object.fromEntries(formData);
-  const parsed = CreateApplicationSchema.safeParse(raw);
+
+  const normalized = {
+    ...raw,
+    jobUrl: raw.jobUrl || undefined, // otherwise we get "" from the form and zod shows an error
+    contactEmail: raw.contactEmail || undefined,
+    appliedAt: raw.appliedAt || undefined,
+  };
+
+  const parsed = CreateApplicationSchema.safeParse(normalized);
 
   if (!parsed.success) {
     return {
