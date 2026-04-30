@@ -1,6 +1,6 @@
 "use client";
 
-import { StatusColors } from "@/lib/constants/Applications";
+import { APPLICATION_STATUS_META } from "@/lib/constants/Applications";
 import { Application, ApplicationStatus } from "@/lib/generated/prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -10,11 +10,14 @@ export const Columns: ColumnDef<Application>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status: ApplicationStatus = row.getValue("status");
-      const color = StatusColors[status];
+
+      const applicationStatus = APPLICATION_STATUS_META[status];
 
       return (
-        <div className={`${color} rounded-[8px]  font-bold text-center`}>
-          {status}
+        <div
+          className={`${applicationStatus.color} rounded-[8px]  font-bold text-center`}
+        >
+          {applicationStatus.label}
         </div>
       );
     },
@@ -35,10 +38,11 @@ export const Columns: ColumnDef<Application>[] = [
     accessorKey: "appliedAt",
     header: "Applied at",
     cell: ({ row }) => {
-      const appliedAtDate = new Date(row.getValue("appliedAt"));
-      const formatted = appliedAtDate.toLocaleDateString();
+      const value = row.getValue("appliedAt")
+        ? new Date(row.getValue("appliedAt")).toLocaleDateString()
+        : "N/A";
 
-      return <div>{formatted}</div>;
+      return <div>{value}</div>;
     },
   },
 ];
