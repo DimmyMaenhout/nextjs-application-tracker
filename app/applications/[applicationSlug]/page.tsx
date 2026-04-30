@@ -2,6 +2,8 @@ import { deleteApplication } from "@/actions/Application";
 import ApplicationDetailRow from "@/components/ApplicationDetailRow";
 import Button from "@/components/Button";
 import NoteCard from "@/components/noteCard";
+import { APPLICATION_STATUS_META } from "@/lib/constants/Applications";
+import { prisma } from "@/lib/prisma";
 
 export default async function ApplicationDetailsPage({
   params,
@@ -11,41 +13,14 @@ export default async function ApplicationDetailsPage({
   const h2Styling = "font-bold text-2xl text-[#1e8fa3] mb-8";
   const { applicationSlug } = await params;
 
-  // @TODO: fetch detail with async call
-  const applicationDetail = {
-    id: 2,
-    companyName: "Shopify",
-    jobTitle: "Fullstack Developer",
-    jobType: "full-time",
-    location: "Remote",
-    remoteType: "remote",
-    status: "interview",
-    jobUrl: "https://shopify.com/careers/fullstack-dev",
+  const applicationDetail = await prisma.application.findFirst({
+    include: { notes: true },
+    where: { id: applicationSlug },
+  });
 
-    appliedAt: new Date("2026-02-05"),
-    createdAt: new Date("2026-02-05"),
-    updatedAt: new Date("2026-02-20"),
-
-    contactName: "Michael Lee",
-    contactEmail: "michael.lee@shopify.com",
-    contactLinkedin: "https://linkedin.com/in/michaellee",
-
-    salaryRange: "€80k - €100k",
-    source: "Referral",
-
-    notes: [
-      {
-        id: "n2",
-        content: "First interview scheduled for Feb 25.",
-        createdAt: "2026-02-20",
-      },
-      {
-        id: "n3",
-        content: "Tech stack: React, Ruby, GraphQL.",
-        createdAt: "2026-02-20",
-      },
-    ],
-  };
+  if (!applicationDetail) {
+    return <p>The requested application couldn't be found, try again later.</p>;
+  }
 
   return (
     <div className="p-8 flex flex-col">
@@ -84,12 +59,18 @@ export default async function ApplicationDetailsPage({
           <div>
             <ApplicationDetailRow
               title="Applied"
-              value={new Date(applicationDetail.appliedAt).toLocaleDateString()}
+              value={
+                applicationDetail.appliedAt
+                  ? new Date(
+                      applicationDetail.appliedAt ?? "",
+                    ).toLocaleDateString()
+                  : ""
+              }
             />
 
             <ApplicationDetailRow
               title="Status"
-              value={applicationDetail.status}
+              value={APPLICATION_STATUS_META[applicationDetail.status].label}
             />
 
             <ApplicationDetailRow
