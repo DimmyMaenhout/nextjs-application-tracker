@@ -1,4 +1,4 @@
-import { Note } from "@/models/Note";
+import { Note } from "@/lib/generated/prisma/client";
 
 interface NoteCardProps {
   note: Note;

@@ -10,10 +10,16 @@ import SelectField from "@/components/form/SelectField";
 import TextAreaField from "@/components/form/TextAreaField";
 import TextField from "@/components/form/TextField";
 import {
+  APPLICATION_STATUS_META,
+  JOB_TYPE_META,
+  REMOTE_TYPE_META,
+} from "@/lib/constants/Applications";
+import {
   ApplicationStatus,
   JobType,
   RemoteType,
 } from "@/lib/generated/prisma/enums";
+import { createSelectItems } from "@/util/select";
 
 import { useActionState } from "react";
 
@@ -44,22 +50,17 @@ export default function NewApplicationPage() {
     success: false,
   });
 
-  const applicationStatusItems = Object.values(ApplicationStatus).map(
-    (value) => ({
-      value,
-      label: value.replaceAll("_", " "),
-    }),
+  const applicationStatusItems = createSelectItems(
+    Object.values(ApplicationStatus),
+    APPLICATION_STATUS_META,
   );
 
-  const jobTypeItems = Object.values(JobType).map((value) => ({
-    value,
-    label: value.replaceAll("_", " "),
-  }));
+  const jobTypeItems = createSelectItems(Object.values(JobType), JOB_TYPE_META);
 
-  const remoteTypeItems = Object.values(RemoteType).map((value) => ({
-    value: value,
-    label: value.replaceAll("_", " "),
-  }));
+  const remoteTypeItems = createSelectItems(
+    Object.values(RemoteType),
+    REMOTE_TYPE_META,
+  );
 
   return (
     <div className="border rounded p-8 border-stone-500">
