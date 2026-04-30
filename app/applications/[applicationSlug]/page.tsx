@@ -91,11 +91,17 @@ export default async function ApplicationDetailsPage({
         <div className="w-full bg-white rounded-2xl p-4">
           <h2 className={h2Styling}>Notes</h2>
 
-          <div className="flex flex-col gap-4 items-center">
-            {applicationDetail.notes.map((note) => (
-              <NoteCard key={note.id} note={note} />
-            ))}
-          </div>
+          {applicationDetail.notes.length > 0 ? (
+            <div className="flex flex-col gap-4 items-center">
+              {applicationDetail.notes.map((note) => (
+                <NoteCard key={note.id} note={note} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center">
+              You don't have any notes for this application.
+            </p>
+          )}
         </div>
       </div>
     </div>
