@@ -85,3 +85,12 @@ export async function deleteApplication(id: string) {
 
   redirect("/applications");
 }
+
+export async function addNote(id: string, note: string) {
+  await prisma.note.create({
+    data: {
+      applicationId: id,
+      content: note,
+    },
+  });
+}
