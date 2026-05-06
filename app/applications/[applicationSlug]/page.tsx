@@ -1,6 +1,7 @@
 import { deleteApplication } from "@/actions/Application";
 import ApplicationDetailRow from "@/components/ApplicationDetailRow";
 import Button from "@/components/Button";
+import { DeleteApplicationButton } from "@/components/DeleteApplicationButton";
 import NoteCard from "@/components/noteCard";
 import {
   Card,
@@ -36,11 +37,7 @@ export default async function ApplicationDetailsPage({
         <CardHeader>
           <CardTitle className={h2Styling}>Details</CardTitle>
           <CardAction>
-            <form action={deleteApplication.bind(null, applicationSlug)}>
-              <Button variant="danger">
-                <Trash2 />
-              </Button>
-            </form>
+            <DeleteApplicationButton id={applicationSlug} />
           </CardAction>
         </CardHeader>
 
