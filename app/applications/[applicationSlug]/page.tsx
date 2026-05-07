@@ -1,4 +1,3 @@
-import { deleteApplication } from "@/actions/Application";
 import ApplicationDetailRow from "@/components/ApplicationDetailRow";
 import Button from "@/components/Button";
 import { DeleteApplicationButton } from "@/components/DeleteApplicationButton";
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { APPLICATION_STATUS_META } from "@/lib/constants/Applications";
 import { prisma } from "@/lib/prisma";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export default async function ApplicationDetailsPage({
   params,
@@ -108,7 +107,7 @@ export default async function ApplicationDetailsPage({
         </CardHeader>
         <CardContent>
           {applicationDetail.notes.length > 0 ? (
-            <div className="flex flex-col gap-4 items-center">
+            <div className="flex flex-col gap-4 items-center mb-8">
               {applicationDetail.notes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}
