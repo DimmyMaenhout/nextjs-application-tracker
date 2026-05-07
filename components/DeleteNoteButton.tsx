@@ -1,23 +1,27 @@
 "use client";
 
-import { deleteApplication } from "@/actions/Application";
+import { deleteNote } from "@/actions/Application";
 import { useConfirm } from "./modals/confirm-provider";
 import Button from "./Button";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Note } from "@/lib/generated/prisma/client";
 
-export function DeleteApplicationButton({ id }: { id: string }) {
+type DeleteNoteButtonProps = Pick<Note, "id" | "applicationId">;
+
+export default function DeleteNoteButton({
+  id,
+  applicationId,
+}: DeleteNoteButtonProps) {
   const { confirm } = useConfirm();
   const router = useRouter();
 
   const handleDelete = () => {
     confirm({
-      title: "Verwijder sollicitatie?",
+      title: "Verwijder notitie?",
       description: "Deze actie kan niet ongedaan gemaakt worden.",
       onConfirm: async () => {
-        await deleteApplication(id);
-
-        router.replace("/applications");
+        await deleteNote(id, applicationId);
       },
     });
   };
