@@ -17,8 +17,7 @@ export function DeleteApplicationButton({ id }: { id: string }) {
       onConfirm: async () => {
         await deleteApplication(id);
 
-        router.push("/appliations");
-        router.refresh();
+        router.replace("/applications");
       },
     });
   };
