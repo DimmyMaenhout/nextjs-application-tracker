@@ -7,6 +7,7 @@ import {
 } from "@/lib/schemas/Application";
 import { USER_ID } from "@/lib/user";
 import { zodToErrors } from "@/util/zodError";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export type AddApplicationActionState = {
@@ -91,4 +92,16 @@ export async function addNote(id: string, note: string) {
       content: note,
     },
   });
+}
+
+export async function deleteNote(noteId: string, applicationId: string) {
+  const note = await prisma.note.findFirst({ where: { id: noteId } });
+
+  if (!note) {
+    throw new Error("Note not found");
+  }
+
+  await prisma.note.delete({ where: { id: noteId } });
+
+  revalidatePath(`/applications/${noteId}`);
 }
