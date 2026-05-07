@@ -1,4 +1,14 @@
+"use client";
+
 import { Note } from "@/lib/generated/prisma/client";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "./ui/card";
+import DeleteNoteButton from "./DeleteNoteButton";
 
 interface NoteCardProps {
   note: Note;
@@ -6,16 +16,22 @@ interface NoteCardProps {
 
 export default function NoteCard({ note }: NoteCardProps) {
   return (
-    <div className="mx-40 bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
-      <div className="flex flex-col gap-2">
+    <Card className="w-full max-w-3xl bg-white rounded-2xl shadow-md p-4 border border-gray-200 hover:shadow-lg transition">
+      <CardHeader>
+        <CardAction>
+          <DeleteNoteButton id={note.id} applicationId={note.applicationId} />
+        </CardAction>
+      </CardHeader>
+      <CardContent>
         <p className="text-gray-800 text-base leading-relaxed">
           {note.content}
         </p>
-
-        <div className="text-sm text-gray-500 mt-2">
-          {new Date(note.createdAt).toLocaleString()}
-        </div>
-      </div>
-    </div>
+      </CardContent>
+      <CardFooter>
+        <p className="text-sm text-gray-500">
+          {new Date(note.createdAt).toLocaleDateString()}
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteApplication, deleteNote } from "@/actions/Application";
+import { deleteNote } from "@/actions/Application";
 import { useConfirm } from "./modals/confirm-provider";
 import Button from "./Button";
 import { Trash2 } from "lucide-react";
