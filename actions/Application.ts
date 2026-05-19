@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import {
   CreateApplication,
   CreateApplicationSchema,
+  CreateNote,
+  CreateNoteSchema,
 } from "@/lib/schemas/Application";
 import { USER_ID } from "@/lib/user";
 import { zodToErrors } from "@/util/zodError";
@@ -85,13 +87,39 @@ export async function deleteApplication(id: string) {
   await prisma.application.delete({ where: { id: id } });
 }
 
-export async function addNote(id: string, note: string) {
+export type AddNoteActionState = {
+  fields: Partial<Record<keyof CreateNote, string>>;
+  errors: Partial<Record<keyof CreateNote, string>>;
+  success: boolean;
+};
+
+export async function addNote(
+  applicationId: string,
+  _prevState: AddNoteActionState,
+  formData: FormData,
+) {
+  const raw = Object.fromEntries(formData);
+
+  const parsed = CreateNoteSchema.safeParse(raw);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      fields: raw as Record<string, string>,
+      errors: zodToErrors(parsed.error),
+    };
+  }
+
+  const data = parsed.data;
+
   await prisma.note.create({
     data: {
-      applicationId: id,
-      content: note,
+      applicationId: applicationId,
+      content: data.note,
     },
   });
+
+  redirect(`/applications/${applicationId}`);
 }
 
 export async function deleteNote(noteId: string, applicationId: string) {
