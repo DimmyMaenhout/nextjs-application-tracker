@@ -12,6 +12,7 @@ import {
 import { APPLICATION_STATUS_META } from "@/lib/constants/Applications";
 import { prisma } from "@/lib/prisma";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default async function ApplicationDetailsPage({
   params,
@@ -100,9 +101,11 @@ export default async function ApplicationDetailsPage({
         <CardHeader>
           <CardTitle className={h2Styling}>Notes</CardTitle>
           <CardAction>
-            <Button>
-              <Plus />
-            </Button>
+            <Link href={`/applications/${applicationSlug}/new-note`}>
+              <Button>
+                <Plus />
+              </Button>
+            </Link>
           </CardAction>
         </CardHeader>
         <CardContent>
