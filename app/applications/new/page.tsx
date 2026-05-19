@@ -163,7 +163,7 @@ export default function NewApplicationPage() {
               />
             </FormRow>
 
-            <TextAreaField name="notes" rows={5} />
+            <TextAreaField name="notes" label="Notes" rows={5} />
           </div>
           <Button className={`self-end`} type="submit" disabled={isPending}>
             Submit
