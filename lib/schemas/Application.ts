@@ -31,3 +31,9 @@ export const CreateApplicationSchema = z.object({
 });
 
 export type CreateApplication = z.infer<typeof CreateApplicationSchema>;
+
+export const CreateNoteSchema = z.object({
+  note: z.string().trim().min(1, "A note can't be empty"),
+});
+
+export type CreateNote = z.infer<typeof CreateNoteSchema>;
