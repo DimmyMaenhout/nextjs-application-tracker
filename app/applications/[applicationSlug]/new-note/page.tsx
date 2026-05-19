@@ -1,4 +1,4 @@
-import NewCommentForm from "@/components/new-comment-form";
+import NewCommentForm from "@/components/forms/new-comment-form";
 import { use } from "react";
 
 export default function NewCommentPage({
@@ -13,8 +13,8 @@ export default function NewCommentPage({
       <div className="mb-8">
         <h1 className="font-bold text-3xl text-(--dark-teal) mb-4">New Note</h1>
         <p>
-          Congrats on being able to add a new application, fill in the details
-          and be happy about a new door opening!
+          Note down anything you find important for this job application
+          (questions, feelings, meeting dates, etc.).
         </p>
       </div>
       <NewCommentForm applicationId={applicationSlug} />
