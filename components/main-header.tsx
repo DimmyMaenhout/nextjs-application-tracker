@@ -10,15 +10,15 @@ export default function MainHeader() {
 
       <nav>
         <ul className="flex gap-8">
-          <li>
+          {/* <li>
             <NavLink href="/dashboard">Dashboard</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink href="/applications">Applications</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink href="/export">Export</NavLink>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </header>
